@@ -7,11 +7,6 @@ function setDate() {
 	const seconds = now.getSeconds();
 	const secondsDegrees = ((seconds / 60) * 360) + 90;
 	secHand.style.transform = `rotate(${secondsDegrees}deg)`;
-	if(secondsDegrees == 90) {
-		secHand.className = 'hand-off sec-hand';
-	} else {
-		secHand.className = 'hand sec-hand';
-	}
 
 	const minutes = now.getMinutes();
 	const minutesDegrees = ((minutes / 60) * 360) + 90;
@@ -21,6 +16,11 @@ function setDate() {
 	const hoursDegrees = ((hours / 12) * 360) + 90;
 	hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
 
+	if(secondsDegrees == 90 || minutesDegrees == 90 || hoursDegrees == 90) {
+		secHand.className = 'hand-off sec-hand';
+	} else {
+		secHand.className = 'hand sec-hand';
+	}
 }
 
 setInterval(setDate, 1000);
