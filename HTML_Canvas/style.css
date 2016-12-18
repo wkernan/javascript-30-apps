@@ -1,0 +1,13 @@
+html, body {
+	margin: 0;
+}
+
+#draw {
+	border: 1px solid black;
+}
+
+#clear {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+}
