@@ -14,6 +14,11 @@ recognition.addEventListener('result', (e) => {
 		.map((result) => result.transcript)
 		.join('');
 
+		if(transcript.includes('call Bill')) {
+			console.log('calling Bill');
+			window.open('tel:5125174258');
+		}
+
 		p.textContent = transcript;
 		if(e.results[0].isFinal) {
 			p = document.createElement('p');
