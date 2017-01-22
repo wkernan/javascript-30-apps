@@ -5,6 +5,21 @@ let lastHole;
 let timeUp = false;
 let score = 0;
 
+function debounce(func, wait = 175, immediate = true) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if(!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if(callNow) func.apply(context, args);
+	};
+};
+
 function randTime(min, max) {
 	return Math.round(Math.random() * (max-min) + min);
 }
@@ -32,6 +47,7 @@ function peep() {
 }
 
 function startGame() {
+	score = 0;
 	scoreboard.textContent = 0;
 	timeUp = false;
 	peep();
@@ -40,10 +56,12 @@ function startGame() {
 
 
 function bonk(e) {
+	console.log(e);
 	if(!e.isTrusted) return; // cheater - isTrusted: false means user simulated click
-	hole.classList.remove('up');
-	scoreboard.textContent = score;
 	score++;
+	console.log(this.parentNode);
+	this.parentNode.classList.remove('up');
+	scoreboard.textContent = score;
 }
 
-moles.forEach((mole) => mole.addEventListener('click', bonk));
+moles.forEach((mole) => mole.addEventListener('click', debounce(bonk)));
